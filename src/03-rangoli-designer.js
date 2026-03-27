@@ -70,25 +70,108 @@
  *   // => ["red", "blue"]
  */
 export function addColors(element, ...colors) {
-  // Your code here
+  if (!element) return -1;
+  let newAddedCount = 0;
+
+  colors.forEach((color) => {
+    const classesArr = Array.from(element.classList);
+    if (!classesArr.includes(color)) {
+      element.classList.add(color);
+      newAddedCount++;
+    }
+  });
+
+  return newAddedCount;
 }
 
 export function removeColors(element, ...colors) {
-  // Your code here
+  //  *   2. removeColors(element, ...colors)
+  //  *      - Removes each color class from the element
+  //  *      - Returns number of classes actually removed (only count those
+  //  *        that were present before removal)
+  //  *      - Agar element null/undefined, return -1
+
+  if (!element) return -1;
+  let removedCount = 0;
+
+  colors.forEach((color) => {
+    const classesArr = Array.from(element.classList);
+    if (classesArr.includes(color)) {
+      element.classList.remove(color);
+      removedCount++;
+    }
+  });
+
+  return removedCount;
 }
 
 export function togglePattern(element, pattern) {
-  // Your code here
+  //  *      - Toggles the class "pattern-{pattern}" on the element
+  //  *        (e.g., pattern="floral" toggles class "pattern-floral")
+  //  *      - Returns true if the class is NOW present after toggle
+  //  *      - Returns false if the class was removed by toggle
+  //  *      - Agar element null/undefined, return null
+
+  if (!element) return null;
+  const classesArr = Array.from(element.classList);
+  if (classesArr.includes(`pattern-${pattern}`)) {
+    element.classList.toggle(`pattern-${pattern}`);
+    return false;
+  } else {
+    element.classList.toggle(`pattern-${pattern}`);
+    return true;
+  }
 }
 
 export function hasDesign(element, designName) {
-  // Your code here
+  //  *   4. hasDesign(element, designName)
+  //  *      - Returns true if element has class "design-{designName}"
+  //  *        (e.g., designName="peacock" checks for class "design-peacock")
+  //  *      - Returns false if class not present
+  //  *      - Agar element null/undefined, return false
+
+  if (!element) return false;
+  const classesArr = Array.from(element.classList);
+  if (classesArr.includes(`design-${designName}`)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 export function replaceDesign(element, oldDesign, newDesign) {
-  // Your code here
+  //  *   5. replaceDesign(element, oldDesign, newDesign)
+  //  *      - Removes class "design-{oldDesign}" and adds "design-{newDesign}"
+  //  *      - Returns true if oldDesign class was present and replaced
+  //  *      - Returns false if oldDesign class was NOT found (newDesign still added)
+  //  *      - Agar element null/undefined, return false
+
+  if (!element) return false;
+  const classesArr = Array.from(element.classList);
+  if (classesArr.includes(`design-${oldDesign}`)) {
+    element.classList.remove(`design-${oldDesign}`);
+    element.classList.add(`design-${newDesign}`);
+    return true;
+  } else {
+    element.classList.add(`design-${newDesign}`);
+    return false;
+  }
 }
 
 export function getActiveColors(element) {
-  // Your code here
+  //  *   6. getActiveColors(element)
+  //  *      - Returns array of all active color names from classes
+  //  *      - Only classes starting with "color-" are considered
+  //  *      - Return just the color name part (e.g., class "color-red" => "red")
+  //  *      - Empty array if no color classes found
+  //  *      - Agar element null/undefined, return []
+
+  if (!element) return [];
+  const classesArr = Array.from(element.classList);
+
+  return classesArr
+    .filter((c) => c.startsWith("color-"))
+    .map((c) => {
+      return c.slice(6);
+    });
 }

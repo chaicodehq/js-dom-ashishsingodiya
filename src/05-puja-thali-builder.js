@@ -58,17 +58,104 @@
  *   manager.removeItem("Phool"); // => true
  */
 export function setupAddButton(button, thaliElement, itemName) {
-  // Your code here
+  if (!button || !thaliElement || !itemName) return null;
+
+  const handler = () => {
+    const li = document.createElement("li");
+    li.textContent = itemName;
+    thaliElement.append(li);
+  };
+
+  button.addEventListener("click", handler);
+
+  return () => {
+    button.removeEventListener("click", handler);
+  };
 }
 
 export function setupRemoveButton(button, thaliElement) {
-  // Your code here
+  if (!button || !thaliElement) return null;
+
+  const handler = () => {
+    const lastChild = thaliElement.lastChild;
+    if (lastChild) thaliElement.removeChild(lastChild);
+  };
+
+  button.addEventListener("click", handler);
+
+  return () => {
+    button.removeEventListener("click", handler);
+  };
 }
 
 export function setupToggleItem(button, thaliElement, itemName) {
-  // Your code here
+  if (!button || !thaliElement || !itemName) return null;
+
+  const handler = () => {
+    const existing = [...thaliElement.children].find((li) => {
+      return li.textContent === itemName;
+    });
+    if (existing) {
+      thaliElement.removeChild(existing);
+    } else {
+      const li = document.createElement("li");
+      li.textContent = itemName;
+      thaliElement.append(li);
+    }
+  };
+  button.addEventListener("click", handler);
+
+  return () => {
+    button.removeEventListener("click", handler);
+  };
 }
 
 export function createThaliManager(thaliElement, counterElement) {
-  // Your code here
+  //  *   4. createThaliManager(thaliElement, counterElement)
+  //  *      - Creates a thali management object (no event listeners, direct methods)
+  //  *      - Returns object with:
+  //  *        addItem(name): creates li with textContent=name, appends to thaliElement,
+  //  *          updates counterElement.textContent with new child count. Returns the li.
+  //  *        removeItem(name): finds li with textContent===name in thaliElement,
+  //  *          removes it, updates counter. Returns true if found and removed, false if not.
+  //  *        getCount(): returns number of children in thaliElement
+  //  *        clear(): removes ALL children from thaliElement, updates counter to 0
+  //  *      - Agar thaliElement or counterElement null/undefined, return null
+
+  if (!thaliElement || !counterElement) return null;
+
+  const addItem = (name) => {
+    const li = document.createElement("li");
+    li.textContent = name;
+    thaliElement.append(li);
+    counterElement.textContent = thaliElement.children.length;
+    return li;
+  };
+
+  const removeItem = (name) => {
+    const existing = [...thaliElement.children].find((li) => {
+      return li.textContent === name;
+    });
+
+    if (existing) {
+      thaliElement.removeChild(existing);
+      counterElement.textContent = thaliElement.children.length;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const getCount = () => Number.parseInt(counterElement.textContent);
+  const clear = () => {
+    thaliElement.replaceChildren();
+    counterElement.textContent = 0;
+  };
+
+  return {
+    addItem,
+    removeItem,
+    getCount,
+    clear,
+  };
 }

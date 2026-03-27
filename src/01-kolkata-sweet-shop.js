@@ -61,13 +61,64 @@
  *   // => item now has <span class="special-badge">Bestseller</span>
  */
 export function createSweetItem(name, price, category) {
-  // Your code here
+  //  *   1. createSweetItem(name, price, category)
+  //  *      - Creates a div element with class "sweet-item"
+  //  *      - Inside div: h3 (name), p with class "price" (text: "₹{price}"),
+  //  *        span with class "category" (text: category)
+  //  *      - Returns the div element
+  //  *      - Validation: name must be string, price must be number, category must be string
+  //  *      - Agar koi bhi param missing ya invalid type, return null
+  if (!name || typeof name !== "string") return null;
+  if (!price || typeof price !== "number") return null;
+  if (!category || typeof category !== "string") return null;
+
+  const div = document.createElement("div");
+  div.classList.add("sweet-item");
+
+  const h3 = document.createElement("h3");
+  h3.textContent = name;
+
+  const p = document.createElement("p");
+  p.classList.add("price");
+  p.textContent = `₹${price}`;
+
+  const span = document.createElement("span");
+  span.classList.add("category");
+  span.textContent = category;
+
+  div.append(h3, p, span);
+
+  return div;
 }
 
 export function buildMenuBoard(sweets) {
-  // Your code here
+  if (!Array.isArray(sweets)) return null;
+  const menuBoard = document.createElement("div");
+  menuBoard.id = "menu-board";
+
+  sweets.forEach((s) => {
+    const item = createSweetItem(s.name, s.price, s.category);
+    menuBoard.append(item);
+  });
+
+  return menuBoard;
 }
 
 export function addSpecialBadge(sweetElement, badgeText) {
-  // Your code here
+  //  *   3. addSpecialBadge(sweetElement, badgeText)
+  //  *      - Takes a sweet-item element and badge text string
+  //  *      - Creates a span with class "special-badge" and textContent = badgeText
+  //  *      - Appends the span to sweetElement
+  //  *      - Returns the modified sweetElement
+  //  *      - Agar sweetElement null/undefined, return null
+  //  *      - Agar badgeText not string or empty, return null
+  if (!sweetElement) return null;
+  if (typeof badgeText !== "string" || badgeText.length === 0) return null;
+
+  const badge = document.createElement("span");
+  badge.classList.add("special-badge");
+  badge.textContent = badgeText;
+
+  sweetElement.append(badge);
+  return sweetElement;
 }

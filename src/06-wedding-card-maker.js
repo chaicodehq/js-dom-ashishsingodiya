@@ -67,7 +67,48 @@
  *   // => [{ name: "Priya", side: "bride" }]
  */
 export function setupGuestList(containerElement) {
-  // Your code here
+  //  *      - Sets up event delegation on containerElement for click events
+  //  *      - Clicking any .remove-btn inside container removes its parent .guest-item
+  //  *      - Returns object with:
+  //  *        addGuest(name, side): creates div.guest-item with:
+  //  *          - data-name attribute = name
+  //  *          - data-side attribute = side ("bride" or "groom")
+  //  *          - span with textContent = name
+  //  *          - button.remove-btn with textContent "Remove"
+  //  *          Appends to container. Returns the created element.
+  //  *        removeGuest(name): finds .guest-item with data-name matching name,
+  //  *          removes it. Returns true if found and removed, false otherwise.
+  //  *        getGuests(): returns array of {name, side} objects from current
+  //  *          .guest-item children in the container
+  //  *      - Agar containerElement null/undefined, return null
+  if (!containerElement) return null;
+  const elements = containerElement.getElementsByClassName("remove-btn");
+
+  containerElement.addEventListener("click", (e)={
+    
+  })
+
+  const addGuest = (name, side) => {
+    const div = document.createElement("div");
+    div.classList.add("guest-item");
+    div.setAttribute("data-name", name);
+    div.setAttribute("data-side", side);
+
+    const span = document.createElement("span");
+    span.textContent = name;
+
+    const button = document.createElement("button");
+    button.classList.add("remove-btn");
+    button.textContent = "Remove";
+
+    div.append(span, button);
+    containerElement.append(div);
+    return div;
+  };
+
+  return {
+    addGuest,
+  };
 }
 
 export function setupThemeSelector(containerElement, previewElement) {
