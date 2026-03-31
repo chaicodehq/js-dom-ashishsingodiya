@@ -111,17 +111,6 @@ export function setupToggleItem(button, thaliElement, itemName) {
 }
 
 export function createThaliManager(thaliElement, counterElement) {
-  //  *   4. createThaliManager(thaliElement, counterElement)
-  //  *      - Creates a thali management object (no event listeners, direct methods)
-  //  *      - Returns object with:
-  //  *        addItem(name): creates li with textContent=name, appends to thaliElement,
-  //  *          updates counterElement.textContent with new child count. Returns the li.
-  //  *        removeItem(name): finds li with textContent===name in thaliElement,
-  //  *          removes it, updates counter. Returns true if found and removed, false if not.
-  //  *        getCount(): returns number of children in thaliElement
-  //  *        clear(): removes ALL children from thaliElement, updates counter to 0
-  //  *      - Agar thaliElement or counterElement null/undefined, return null
-
   if (!thaliElement || !counterElement) return null;
 
   const addItem = (name) => {

@@ -67,26 +67,14 @@
  *   // => [{ name: "Priya", side: "bride" }]
  */
 export function setupGuestList(containerElement) {
-  //  *      - Sets up event delegation on containerElement for click events
-  //  *      - Clicking any .remove-btn inside container removes its parent .guest-item
-  //  *      - Returns object with:
-  //  *        addGuest(name, side): creates div.guest-item with:
-  //  *          - data-name attribute = name
-  //  *          - data-side attribute = side ("bride" or "groom")
-  //  *          - span with textContent = name
-  //  *          - button.remove-btn with textContent "Remove"
-  //  *          Appends to container. Returns the created element.
-  //  *        removeGuest(name): finds .guest-item with data-name matching name,
-  //  *          removes it. Returns true if found and removed, false otherwise.
-  //  *        getGuests(): returns array of {name, side} objects from current
-  //  *          .guest-item children in the container
-  //  *      - Agar containerElement null/undefined, return null
   if (!containerElement) return null;
-  const elements = containerElement.getElementsByClassName("remove-btn");
 
-  containerElement.addEventListener("click", (e)={
-    
-  })
+  containerElement.addEventListener("click", (e) => {
+    if (e.target.classList.contains("remove-btn")) {
+      const parent = e.target.closest(".guest-item");
+      if (parent) parent.remove();
+    }
+  });
 
   const addGuest = (name, side) => {
     const div = document.createElement("div");
@@ -106,15 +94,95 @@ export function setupGuestList(containerElement) {
     return div;
   };
 
+  const removeGuest = (name) => {
+    const guestElement = containerElement.querySelector(`.guest-item[data-name="${name}"]`);
+    if (guestElement) {
+      guestElement.remove();
+      return true;
+    }
+    return false;
+  };
+
+  const getGuests = () => {
+    let arr = [];
+    const guestElements = containerElement.querySelectorAll(".guest-item");
+    guestElements.forEach((g) => {
+      const name = g.getAttribute("data-name");
+      const side = g.getAttribute("data-side");
+      arr.push({ name, side });
+    });
+    return arr;
+  };
+
   return {
     addGuest,
+    removeGuest,
+    getGuests,
   };
 }
 
 export function setupThemeSelector(containerElement, previewElement) {
-  // Your code here
+  if (!containerElement || !previewElement) return null;
+
+  const btn_1 = document.createElement("button");
+  btn_1.classList.add("theme-btn");
+  btn_1.dataset.theme = "traditional";
+  btn_1.textContent = "traditional";
+
+  const btn_2 = document.createElement("button");
+  btn_2.classList.add("theme-btn");
+  btn_2.dataset.theme = "modern";
+  btn_2.textContent = "modern";
+
+  const btn_3 = document.createElement("button");
+  btn_3.classList.add("theme-btn");
+  btn_3.dataset.theme = "royal";
+  btn_3.textContent = "royal";
+
+  containerElement.append(btn_1, btn_2, btn_3);
+
+  containerElement.addEventListener("click", (e) => {
+    if (e.target.classList.contains("theme-btn")) {
+      previewElement.className = e.target.dataset.theme;
+      previewElement.dataset.theme = e.target.dataset.theme;
+    }
+  });
+
+  const getTheme = () => {
+    if (!previewElement.dataset.theme) {
+      return null;
+    }
+    return previewElement.dataset.theme;
+  };
+
+  return {
+    getTheme,
+  };
 }
 
 export function setupCardEditor(cardElement) {
-  // Your code here
+  if (!cardElement) return null;
+
+  cardElement.addEventListener("click", (e) => {
+    const elements = cardElement.querySelectorAll(".editing");
+    elements.forEach((element) => {
+      element.classList.remove("editing");
+      element.contentEditable = "false";
+    });
+
+    if (e.target.hasAttribute("data-editable")) {
+      e.target.classList.add("editing");
+      e.target.contentEditable = "true";
+    }
+  });
+
+  const getContent = (field) => {
+    const element = cardElement.querySelector(`[data-editable="${field}"]`);
+    if (!element) return null;
+    return element.textContent;
+  };
+
+  return {
+    getContent,
+  };
 }

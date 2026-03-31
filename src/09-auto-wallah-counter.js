@@ -87,29 +87,62 @@
  *   // => { total: 2, waiting: 1, serving: 1, completed: 0 }
  */
 export function findQueueContainer(element) {
-  // Your code here
+  if (!element) return null;
+  return element.closest(".queue-container");
 }
 
 export function getNextInQueue(element) {
-  // Your code here
+  if (!element) return null;
+  return element.nextElementSibling;
 }
 
 export function getPreviousInQueue(element) {
-  // Your code here
+  if (!element) return null;
+  return element.previousElementSibling;
 }
 
 export function getQueuePosition(element) {
-  // Your code here
+  if (!element) return -1;
+  const parent = element.parentNode;
+  if (!parent) return -1;
+
+  const index = Array.from(parent.children).indexOf(element);
+  return index + 1;
 }
 
 export function moveToFront(element) {
-  // Your code here
+  if (!element) return false;
+  const parent = element.parentNode;
+  if (!parent) return false;
+
+  if (parent.firstElementChild === element) return false;
+
+  parent.insertBefore(element, parent.firstChild);
+
+  return true;
 }
 
 export function removeFromQueue(element) {
-  // Your code here
+  if (!element) return null;
+  const parent = element.parentNode;
+  if (!parent) return null;
+
+  parent.removeChild(element);
+  return element;
 }
 
 export function getQueueStats(queueContainer) {
-  // Your code here
+  if (!queueContainer) return null;
+
+  const total = queueContainer.children.length;
+  const waiting = queueContainer.getElementsByClassName("waiting").length;
+  const serving = queueContainer.getElementsByClassName("serving").length;
+  const completed = queueContainer.getElementsByClassName("completed").length;
+
+  return {
+    total,
+    waiting,
+    serving,
+    completed,
+  };
 }

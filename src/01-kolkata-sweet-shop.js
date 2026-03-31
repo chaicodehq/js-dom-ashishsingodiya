@@ -105,13 +105,6 @@ export function buildMenuBoard(sweets) {
 }
 
 export function addSpecialBadge(sweetElement, badgeText) {
-  //  *   3. addSpecialBadge(sweetElement, badgeText)
-  //  *      - Takes a sweet-item element and badge text string
-  //  *      - Creates a span with class "special-badge" and textContent = badgeText
-  //  *      - Appends the span to sweetElement
-  //  *      - Returns the modified sweetElement
-  //  *      - Agar sweetElement null/undefined, return null
-  //  *      - Agar badgeText not string or empty, return null
   if (!sweetElement) return null;
   if (typeof badgeText !== "string" || badgeText.length === 0) return null;
 

@@ -106,12 +106,6 @@ export function removeColors(element, ...colors) {
 }
 
 export function togglePattern(element, pattern) {
-  //  *      - Toggles the class "pattern-{pattern}" on the element
-  //  *        (e.g., pattern="floral" toggles class "pattern-floral")
-  //  *      - Returns true if the class is NOW present after toggle
-  //  *      - Returns false if the class was removed by toggle
-  //  *      - Agar element null/undefined, return null
-
   if (!element) return null;
   const classesArr = Array.from(element.classList);
   if (classesArr.includes(`pattern-${pattern}`)) {
@@ -124,12 +118,6 @@ export function togglePattern(element, pattern) {
 }
 
 export function hasDesign(element, designName) {
-  //  *   4. hasDesign(element, designName)
-  //  *      - Returns true if element has class "design-{designName}"
-  //  *        (e.g., designName="peacock" checks for class "design-peacock")
-  //  *      - Returns false if class not present
-  //  *      - Agar element null/undefined, return false
-
   if (!element) return false;
   const classesArr = Array.from(element.classList);
   if (classesArr.includes(`design-${designName}`)) {
@@ -140,12 +128,6 @@ export function hasDesign(element, designName) {
 }
 
 export function replaceDesign(element, oldDesign, newDesign) {
-  //  *   5. replaceDesign(element, oldDesign, newDesign)
-  //  *      - Removes class "design-{oldDesign}" and adds "design-{newDesign}"
-  //  *      - Returns true if oldDesign class was present and replaced
-  //  *      - Returns false if oldDesign class was NOT found (newDesign still added)
-  //  *      - Agar element null/undefined, return false
-
   if (!element) return false;
   const classesArr = Array.from(element.classList);
   if (classesArr.includes(`design-${oldDesign}`)) {
@@ -159,13 +141,6 @@ export function replaceDesign(element, oldDesign, newDesign) {
 }
 
 export function getActiveColors(element) {
-  //  *   6. getActiveColors(element)
-  //  *      - Returns array of all active color names from classes
-  //  *      - Only classes starting with "color-" are considered
-  //  *      - Return just the color name part (e.g., class "color-red" => "red")
-  //  *      - Empty array if no color classes found
-  //  *      - Agar element null/undefined, return []
-
   if (!element) return [];
   const classesArr = Array.from(element.classList);
 
